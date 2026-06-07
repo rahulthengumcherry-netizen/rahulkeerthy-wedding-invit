@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rahul & Keerthy — Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f5f2ee;
+    --cream-dark: #ede8e1;
+    --lavender: #e8e4f0;
+    --lavender-mid: #c8c0d8;
+    --sage: #5a7a5a;
+    --sage-dark: #3d5a3d;
+    --charcoal: #2c2c2c;
+    --muted: #7a7a7a;
+    --border: #d8d2c8;
+    --white: #ffffff;
+  }
+  body {
+    background: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 10% 15%, rgba(200,192,216,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 90% 85%, rgba(200,192,216,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; padding: 0 20px 60px; }
+
+  .invitation-header { text-align: center; padding: 48px 20px 32px; border-bottom: 1px solid var(--border); }
+  .exclusive-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
+  .guest-name { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; font-style: italic; color: var(--charcoal); line-height: 1.2; margin-bottom: 8px; }
+  .families-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+
+  .couples-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; padding: 32px 0 24px; align-items: center; border-bottom: 1px solid var(--border); }
+  .couple-block { text-align: center; }
+  .couple-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--charcoal); line-height: 1.2; margin-bottom: 4px; }
+  .ampersand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--muted); display: block; margin: 3px 0; }
+  .partner-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--charcoal); margin-bottom: 10px; }
+  .parents-label { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2px; color: var(--lavender-mid); text-transform: uppercase; margin-bottom: 4px; }
+  .parents-names { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: var(--muted); line-height: 1.5; }
+  .divider-center { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 14px; }
+  .divider-line { width: 1px; height: 28px; background: var(--border); }
+  .heart-icon { font-size: 13px; color: var(--lavender-mid); }
+  .center-ampersand { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--lavender-mid); line-height: 1; }
+
+  .honour-label { text-align: center; padding: 22px 0 18px; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+
+  .event-details { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 14px; background: var(--white); }
+  .event-cell { padding: 14px 10px; text-align: center; }
+  .event-cell-month { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; color: var(--muted); display: block; margin-bottom: 2px; }
+  .event-cell-year { font-family: 'Montserrat', sans-serif; font-size: 9px; color: var(--muted); margin-top: 2px; }
+  .event-cell-day { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 400; color: var(--sage-dark); line-height: 1; display: block; }
+  .event-cell-time { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.5px; color: var(--muted); display: block; }
+  .event-cell-time-range { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 1px; color: var(--muted); display: block; margin-top: 4px; }
+  .event-separator { width: 1px; background: var(--border); align-self: stretch; }
+
+  .venue-block { text-align: center; margin-bottom: 26px; }
+  .venue-name { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 2px; color: var(--charcoal); margin-bottom: 6px; }
+  .venue-location { font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 4px; }
+
+  .countdown-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--muted); text-align: center; text-transform: uppercase; margin-bottom: 12px; }
+  .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 28px; }
+  .countdown-cell { border: 1px solid var(--border); border-radius: 6px; padding: 12px 8px; text-align: center; background: var(--white); }
+  .countdown-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--charcoal); display: block; line-height: 1; }
+  .countdown-unit { font-family: 'Montserrat', sans-serif; font-size: 7px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+  .rsvp-section { margin-bottom: 24px; }
+  .rsvp-question { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; text-align: center; margin-bottom: 14px; }
+  .rsvp-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rsvp-btn { padding: 14px; border-radius: 6px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: 1px solid var(--border); transition: all 0.2s ease; text-align: center; }
+  .rsvp-yes { background: var(--sage-dark); color: var(--white); border-color: var(--sage-dark); }
+  .rsvp-yes:hover { background: var(--sage); }
+  .rsvp-no { background: var(--white); color: var(--muted); }
+  .rsvp-no:hover { background: var(--cream-dark); }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .wonderful-screen { text-align: center; padding: 40px 20px; animation: fadeIn 0.4s ease; }
+  .wonderful-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; font-style: italic; color: var(--charcoal); margin-bottom: 6px; }
+  .details-for { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 32px; }
+  .guest-count-question { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--charcoal); margin-bottom: 24px; }
+  .guest-counter { display: flex; align-items: center; justify-content: center; gap: 28px; margin-bottom: 8px; }
+  .counter-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 50%; background: var(--white); font-size: 20px; color: var(--charcoal); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .counter-btn:hover { background: var(--cream-dark); }
+  .counter-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--charcoal); min-width: 60px; text-align: center; }
+  .including-yourself { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 28px; }
+  .submit-btn { width: 100%; padding: 16px; background: var(--sage-dark); color: var(--white); border: none; border-radius: 6px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .submit-btn:hover { background: var(--sage); }
+
+  .confirmed-screen { animation: fadeIn 0.4s ease; }
+  .confirmed-name { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 3px; color: var(--muted); text-align: center; text-transform: uppercase; padding: 32px 0 20px; }
+  .confirmed-banner { background: var(--sage-dark); color: var(--white); padding: 16px 20px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; margin-bottom: 24px; border-radius: 6px; }
+  .confirmed-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--white); margin-bottom: 14px; }
+  .confirmed-cell { padding: 20px 14px; text-align: center; }
+  .confirmed-cell:first-child { border-right: 1px solid var(--border); }
+  .confirmed-cell-big { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--charcoal); display: block; line-height: 1; }
+  .confirmed-cell-label { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+  .confirmed-time-label { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; display: block; margin-top: 10px; }
+  .confirmed-time-val { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--charcoal); }
+  .confirmed-venue-name { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 1px; color: var(--charcoal); display: block; margin-bottom: 4px; line-height: 1.4; }
+  .confirmed-venue-loc { font-family: 'Montserrat', sans-serif; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  .location-btn { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--white); font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--charcoal); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; text-decoration: none; }
+  .location-btn:hover { background: var(--cream-dark); }
+  .phone-btn { width: 100%; padding: 14px; border: 1px solid var(--sage-dark); border-radius: 6px; background: var(--white); font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--sage-dark); margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; text-decoration: none; }
+  .phone-btn:hover { background: rgba(90,122,90,0.05); }
+  .edit-btn { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--cream-dark); font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+  .edit-btn:hover { background: var(--border); }
+
+  .declined-screen { text-align: center; padding: 48px 20px; animation: fadeIn 0.4s ease; }
+  .declined-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; font-style: italic; color: var(--charcoal); margin-bottom: 12px; }
+  .declined-text { font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+  .change-mind-btn { padding: 14px 28px; border: 1px solid var(--border); border-radius: 6px; background: var(--white); font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--charcoal); transition: background 0.2s; }
+  .change-mind-btn:hover { background: var(--cream-dark); }
+
+  /* Link Generator */
+  .generator-section { border-top: 1px solid var(--border); margin-top: 40px; padding-top: 32px; }
+  .generator-title { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; text-align: center; margin-bottom: 20px; }
+  .generator-input-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .generator-input { flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--charcoal); background: var(--white); outline: none; }
+  .generator-input:focus { border-color: var(--lavender-mid); }
+  .generator-btn { padding: 12px 18px; background: var(--sage-dark); color: var(--white); border: none; border-radius: 6px; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  .generator-btn:hover { background: var(--sage); }
+  .generated-link { display: none; background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+  .generated-link-url { font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--sage-dark); word-break: break-all; margin-bottom: 8px; }
+  .copy-btn { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--cream-dark); font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; color: var(--charcoal); transition: background 0.2s; }
+  .copy-btn:hover { background: var(--border); }
+  .copy-success { display: none; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 2px; color: var(--sage-dark); text-align: center; margin-top: 6px; text-transform: uppercase; }
+
+  .petals { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .petal { position: absolute; opacity: 0.12; animation: float linear infinite; }
+
+  @keyframes float { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0; } 10% { opacity: 0.12; } 90% { opacity: 0.08; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<div class="page">
+
+  <!-- SCREEN 1: Main Invitation -->
+  <div id="screen-main" class="screen active">
+
+    <div class="invitation-header">
+      <p class="exclusive-label">Exclusive Invitation For</p>
+      <h1 class="guest-name" id="guest-display">Our Beloved Guest</h1>
+      <p class="families-label">Together With Their Families</p>
+    </div>
+
+    <div class="couples-grid">
+      <div class="couple-block">
+        <div class="couple-name">Rahul</div>
+        <div style="height:14px"></div>
+        <div class="parents-label">Son of</div>
+        <div class="parents-names">Jayan<br>&amp; Sreeba</div>
+      </div>
+      <div class="divider-center">
+        <div class="divider-line"></div>
+        <span class="heart-icon">♡</span>
+        <span class="center-ampersand">&amp;</span>
+        <div class="divider-line"></div>
+      </div>
+      <div class="couple-block">
+        <div class="couple-name">Keerthy</div>
+        <div style="height:14px"></div>
+        <div class="parents-label">Daughter of</div>
+        <div class="parents-names">Vivek<br>&amp; Jayanthi</div>
+      </div>
+    </div>
+
+    <p class="honour-label">Request the Honour of Your Presence</p>
+
+    <div class="event-details">
+      <div class="event-cell">
+        <span class="event-cell-month">November</span>
+        <span class="event-cell-day">01</span>
+        <span class="event-cell-year">2026, Sunday</span>
+      </div>
+      <div class="event-separator"></div>
+      <div class="event-cell" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <span class="event-cell-time">10:30 AM</span>
+        <span class="event-cell-time-range">to 11:30 AM</span>
+      </div>
+    </div>
+
+    <div class="venue-block">
+      <div class="venue-name">BLUE SERENE RESORTS</div>
+      <div class="venue-location">
+        <span>📍</span>
+        <span>Thrissur, Kerala</span>
+      </div>
+    </div>
+
+    <p class="countdown-label">Countdown to Celebrations</p>
+    <div class="countdown-grid">
+      <div class="countdown-cell"><span class="countdown-num" id="cd-days">00</span><div class="countdown-unit">Days</div></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-hours">00</span><div class="countdown-unit">Hours</div></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-mins">00</span><div class="countdown-unit">Mins</div></div>
+      <div class="countdown-cell"><span class="countdown-num" id="cd-secs">00</span><div class="countdown-unit">Secs</div></div>
+    </div>
+
+    <div class="rsvp-section">
+      <p class="rsvp-question">Will You Attend?</p>
+      <div class="rsvp-buttons">
+        <button class="rsvp-btn rsvp-yes" onclick="showRSVP()">Joyfully Accepts</button>
+        <button class="rsvp-btn rsvp-no" onclick="showDeclined()">Unfortunately Declines</button>
+      </div>
+    </div>
+
+    <!-- Link Generator (hidden in real use — for host only) -->
+    <div class="generator-section" id="generator-section">
+      <p class="generator-title">✦ Generate Guest Links</p>
+      <div class="generator-input-row">
+        <input class="generator-input" id="gen-input" type="text" placeholder="Guest name (e.g. Akhil and Kavya)" />
+        <button class="generator-btn" onclick="generateLink()">Generate</button>
+      </div>
+      <div class="generated-link" id="generated-link">
+        <div class="generated-link-url" id="generated-url"></div>
+        <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+        <div class="copy-success" id="copy-success">✓ Copied to clipboard</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCREEN 2: RSVP Guest Count -->
+  <div id="screen-rsvp" class="screen">
+    <div class="wonderful-screen">
+      <div class="wonderful-title">✦ Wonderful!</div>
+      <p class="details-for">Details for <span id="rsvp-guest-name">Guest</span></p>
+      <p class="guest-count-question">How many family members will attend?</p>
+      <div class="guest-counter">
+        <button class="counter-btn" onclick="adjustCount(-1)">−</button>
+        <span class="counter-num" id="guest-count">1</span>
+        <button class="counter-btn" onclick="adjustCount(1)">+</button>
+      </div>
+      <p class="including-yourself">Including Yourself</p>
+      <button class="submit-btn" onclick="submitRSVP()">Submit RSVP</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Confirmed -->
+  <div id="screen-confirmed" class="screen">
+    <div class="confirmed-screen">
+      <p class="confirmed-name" id="confirmed-name-label">Guest Name</p>
+      <div class="confirmed-banner">Your RSVP has been received! We look forward to celebrating with you.</div>
+      <div class="confirmed-details-grid">
+        <div class="confirmed-cell">
+          <span class="confirmed-cell-big">01</span>
+          <div class="confirmed-cell-label">Nov 2026</div>
+          <span class="confirmed-time-label">Ceremony Time</span>
+          <span class="confirmed-time-val">10:30 – 11:30 AM</span>
+        </div>
+        <div class="confirmed-cell" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <span class="confirmed-venue-name">BLUE SERENE<br>RESORTS</span>
+          <span class="confirmed-venue-loc">Thrissur, Kerala</span>
+        </div>
+      </div>
+
+      <a href="https://maps.google.com/?q=Blue+Serene+Resorts+Thrissur" target="_blank" class="location-btn">📍 &nbsp; Click Here for Location</a>
+      <a href="tel:+919928031423" class="phone-btn">📞 &nbsp; +91 9928031423</a>
+
+      <p class="countdown-label" style="margin-bottom:10px">Countdown to Celebrations</p>
+      <div class="countdown-grid" style="margin-bottom:24px">
+        <div class="countdown-cell"><span class="countdown-num" id="cd2-days">00</span><div class="countdown-unit">Days</div></div>
+        <div class="countdown-cell"><span class="countdown-num" id="cd2-hours">00</span><div class="countdown-unit">Hours</div></div>
+        <div class="countdown-cell"><span class="countdown-num" id="cd2-mins">00</span><div class="countdown-unit">Secs</div></div>
+        <div class="countdown-cell"><span class="countdown-num" id="cd2-secs">00</span><div class="countdown-unit">Secs</div></div>
+      </div>
+
+      <button class="edit-btn" onclick="editResponse()">✏ &nbsp; Edit Response</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: Declined -->
+  <div id="screen-declined" class="screen">
+    <div class="declined-screen">
+      <div class="declined-title">We'll Miss You</div>
+      <p class="declined-text">We're sorry you won't be able to join us.<br>You'll be in our hearts on this special day.</p>
+      <button class="change-mind-btn" onclick="goBack()">Changed Your Mind?</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const WEDDING_DATE = new Date('2026-11-01T10:30:00');
+
+  // Guest name from URL param
+  const params = new URLSearchParams(window.location.search);
+  const guestName = params.get('name') || 'Our Beloved Guest';
+  const isHost = params.get('host') === '1';
+
+  document.getElementById('guest-display').textContent = guestName;
+  document.getElementById('rsvp-guest-name').textContent = guestName;
+  document.getElementById('confirmed-name-label').textContent = guestName.toUpperCase();
+  document.getElementById('gen-input') && (document.getElementById('gen-input').placeholder = 'Guest name (e.g. Akhil and Kavya)');
+
+  // Hide generator for regular guests, show only for host
+  if (!isHost) {
+    const gen = document.getElementById('generator-section');
+    if (gen) gen.style.display = 'none';
+  }
+
+  // Countdown
+  function updateCountdown() {
+    const now = new Date();
+    const diff = WEDDING_DATE - now;
+    if (diff <= 0) return;
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    const fmt = n => String(n).padStart(2, '0');
+    ['','2'].forEach(s => {
+      const d = document.getElementById('cd'+s+'-days'); if(d) d.textContent = fmt(days);
+      const h = document.getElementById('cd'+s+'-hours'); if(h) h.textContent = fmt(hours);
+      const m = document.getElementById('cd'+s+'-mins'); if(m) m.textContent = fmt(mins);
+      const sc = document.getElementById('cd'+s+'-secs'); if(sc) sc.textContent = fmt(secs);
+    });
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Screens
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function showRSVP() { showScreen('screen-rsvp'); }
+  function showDeclined() { showScreen('screen-declined'); }
+  function goBack() { showScreen('screen-main'); }
+
+  let guestCount = 1;
+  function adjustCount(delta) {
+    guestCount = Math.max(1, Math.min(20, guestCount + delta));
+    document.getElementById('guest-count').textContent = guestCount;
+  }
+  function submitRSVP() { showScreen('screen-confirmed'); }
+  function editResponse() { showScreen('screen-rsvp'); }
+
+  // Link generator
+  function generateLink() {
+    const name = document.getElementById('gen-input').value.trim();
+    if (!name) return;
+    const base = window.location.href.split('?')[0];
+    const url = base + '?name=' + encodeURIComponent(name);
+    document.getElementById('generated-url').textContent = url;
+    document.getElementById('generated-link').style.display = 'block';
+    document.getElementById('copy-success').style.display = 'none';
+  }
+  function copyLink() {
+    const url = document.getElementById('generated-url').textContent;
+    navigator.clipboard.writeText(url).then(() => {
+      document.getElementById('copy-success').style.display = 'block';
+    });
+  }
+
+  // Petals
+  const petalContainer = document.getElementById('petals');
+  for (let i = 0; i < 8; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    const left = Math.random() * 100;
+    const duration = 12 + Math.random() * 16;
+    const delay = Math.random() * 20;
+    const size = 12 + Math.random() * 16;
+    petal.style.cssText = `left:${left}%;top:-30px;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:${delay}s;`;
+    petal.innerHTML = i % 2 === 0
+      ? `<svg viewBox="0 0 20 28" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="14" rx="7" ry="12" fill="#c8c0d8"/></svg>`
+      : `<svg viewBox="0 0 16 22" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8" cy="11" rx="5" ry="9" fill="#d8d2c8"/></svg>`;
+    petalContainer.appendChild(petal);
+  }
+</script>
+</body>
+</html>
